@@ -70,17 +70,21 @@
             <div id="game" v-if="game">
                 <div id="count">{{rounds.length}}
                 </div><div id="simon">
-                    <button class="simon btn" id="green" v-on:click="greenBtn">
-                    </button><button class="simon btn" id="red" v-on:click="redBtn">
-                    </button><button class="simon btn" id="yellow" v-on:click="yellowBtn">
-                    </button><button class="simon btn" id="blue" v-on:click="blueBtn">
+                    <button class="simon btn" id="green"
+                        v-on:click="greenBtn">
+                    </button><button class="simon btn" id="red"
+                        v-on:click="redBtn">
+                    </button><button class="simon btn" id="yellow"
+                        v-on:click="yellowBtn">
+                    </button><button class="simon btn" id="blue"
+                        v-on:click="blueBtn">
                     </button>
                 </div><button class="btn" id="reset" v-on:click="reset">RESET
                 </button>
             </div>
         </div>
 
-        <script type="text/javascript" src="https://unpkg.com/vue"></script>
+        <script type="text/javascript" src="src/vue.min.js"></script>
         <script type="text/javascript" src="src/simon.js"></script>
 
     </body>

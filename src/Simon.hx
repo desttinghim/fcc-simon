@@ -32,6 +32,7 @@ class Simon {
 
                 advance: advance,
                 getnext: getnext,
+                demonstrate: demonstrate,
                 start: start,
                 toggleStrict: function() {
                     var strict = Lib.nativeThis.strict;
@@ -83,5 +84,22 @@ class Simon {
             default: SimonClr.yellow;
         });
         trace(Lib.nativeThis.rounds);
+        Lib.nativeThis.demonstrate();
+    }
+
+    inline static function demonstrate() {
+        for (i in 0...Lib.nativeThis.rounds.length) {
+            trace(i);
+            var clr = Lib.nativeThis.rounds[i];
+            var el = js.Browser.document.getElementById(clr);
+            if (el == null) {trace('what'); continue;}
+            haxe.Timer.delay(function() {
+                trace(clr);
+                el.setAttribute("style", "box-shadow: 10px 10px 5px black inset;");
+            }, i * 1000);
+            haxe.Timer.delay(function() {
+                el.setAttribute("style", "");
+            }, i * 1000 + 500);
+        }
     }
 }

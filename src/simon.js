@@ -32,7 +32,7 @@ Simon.main = function() {
 			this.advance();
 		}
 	};
-	Simon.app = new Vue({ el : "#app", data : { menu : true, game : false, strict : false, count : 0, rounds : []}, methods : { redBtn : tmp, blueBtn : tmp1, greenBtn : tmp2, yellowBtn : tmp3, advance : Simon.advance, getnext : Simon.getnext, start : Simon.start, toggleStrict : function() {
+	Simon.app = new Vue({ el : "#app", data : { menu : true, game : false, strict : false, count : 0, rounds : []}, methods : { redBtn : tmp, blueBtn : tmp1, greenBtn : tmp2, yellowBtn : tmp3, advance : Simon.advance, getnext : Simon.getnext, demonstrate : Simon.demonstrate, start : Simon.start, toggleStrict : function() {
 		this.strict = this.strict ? false : true;
 	}, reset : Simon.reset}});
 };
@@ -83,11 +83,63 @@ Simon.getnext = function() {
 	}
 	this.rounds.push(tmp);
 	console.log(this.rounds);
+	this.demonstrate();
+};
+Simon.demonstrate = function() {
+	var _g1 = 0;
+	var _g = this.rounds.length;
+	while(_g1 < _g) {
+		var i = _g1++;
+		console.log(i);
+		var clr = [this.rounds[i]];
+		var el = [window.document.getElementById(clr[0])];
+		if(el[0] == null) {
+			console.log("what");
+			continue;
+		}
+		haxe_Timer.delay((function(el1,clr1) {
+			return function() {
+				console.log(clr1[0]);
+				el1[0].setAttribute("style","box-shadow: 10px 10px 5px black inset;");
+			};
+		})(el,clr),i * 1000);
+		haxe_Timer.delay((function(el2) {
+			return function() {
+				el2[0].setAttribute("style","");
+			};
+		})(el),i * 1000 + 500);
+	}
 };
 var Std = function() { };
 Std.__name__ = true;
 Std.string = function(s) {
 	return js_Boot.__string_rec(s,"");
+};
+var haxe_Timer = function(time_ms) {
+	var me = this;
+	this.id = setInterval(function() {
+		me.run();
+	},time_ms);
+};
+haxe_Timer.__name__ = true;
+haxe_Timer.delay = function(f,time_ms) {
+	var t = new haxe_Timer(time_ms);
+	t.run = function() {
+		t.stop();
+		f();
+	};
+	return t;
+};
+haxe_Timer.prototype = {
+	stop: function() {
+		if(this.id == null) {
+			return;
+		}
+		clearInterval(this.id);
+		this.id = null;
+	}
+	,run: function() {
+	}
 };
 var js_Boot = function() { };
 js_Boot.__name__ = true;
