@@ -18,8 +18,8 @@ class Simon {
         app = new Vue({
             el: '#app',
             data: {
-                menu: false,
-                game: true,
+                menu: true,
+                game: false,
                 count: 0,
                 rounds: [],
             },
@@ -28,35 +28,48 @@ class Simon {
                 blueBtn: btn(SimonClr.blue),
                 greenBtn: btn(SimonClr.green),
                 yellowBtn: btn(SimonClr.yellow),
+                advance: advance,
+                getnext: getnext,
+                start: start,
             },
         });
     }
 
     inline static function btn(btnClr:SimonClr) {
         return function() {
-            trace(btnClr);
+            trace(btnClr + " " + Lib.nativeThis.count);
             if (Lib.nativeThis.rounds[Lib.nativeThis.count] == btnClr) {
-                advance();
+                Lib.nativeThis.advance();
             }
         }
     }
 
-    static function advance() {
-        if (app.count < app.rounds.length) {
-            app.count++;
+    inline static function start() {
+        Lib.nativeThis.menu = false;
+        Lib.nativeThis.game = true;
+        Lib.nativeThis.count = 0;
+        Lib.nativeThis.rounds = [];
+        Lib.nativeThis.getnext();
+    }
+
+    inline static function advance() {
+        if (Lib.nativeThis.count < Lib.nativeThis.rounds.length-1) {
+            Lib.nativeThis.count++;
         } else {
-            app.count = 0;
-            getnext();
+            Lib.nativeThis.count = 0;
+            Lib.nativeThis.getnext();
         }
     }
 
-    static function getnext() {
-        app.rounds.push(switch(Math.floor(Math.random() * 4)) {
+    inline static function getnext() {
+        var rand = Math.floor(Math.random() * 4);
+        Lib.nativeThis.rounds.push(switch(rand) {
             case 0: SimonClr.red;
             case 1: SimonClr.blue;
             case 2: SimonClr.green;
             case 3: SimonClr.yellow;
             default: SimonClr.yellow;
         });
+        trace(Lib.nativeThis.rounds);
     }
 }
