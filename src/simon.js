@@ -32,7 +32,9 @@ Simon.main = function() {
 			this.advance();
 		}
 	};
-	Simon.app = new Vue({ el : "#app", data : { menu : true, game : false, count : 0, rounds : []}, methods : { redBtn : tmp, blueBtn : tmp1, greenBtn : tmp2, yellowBtn : tmp3, advance : Simon.advance, getnext : Simon.getnext, start : Simon.start, reset : Simon.reset}});
+	Simon.app = new Vue({ el : "#app", data : { menu : true, game : false, strict : false, count : 0, rounds : []}, methods : { redBtn : tmp, blueBtn : tmp1, greenBtn : tmp2, yellowBtn : tmp3, advance : Simon.advance, getnext : Simon.getnext, start : Simon.start, toggleStrict : function() {
+		this.strict = this.strict ? false : true;
+	}, reset : Simon.reset}});
 };
 Simon.btn = function(btnClr) {
 	return function() {

@@ -20,6 +20,7 @@ class Simon {
             data: {
                 menu: true,
                 game: false,
+                strict: false,
                 count: 0,
                 rounds: [],
             },
@@ -32,6 +33,10 @@ class Simon {
                 advance: advance,
                 getnext: getnext,
                 start: start,
+                toggleStrict: function() {
+                    var strict = Lib.nativeThis.strict;
+                    Lib.nativeThis.strict = (strict ? false : true);
+                },
                 reset: reset
             },
         });
