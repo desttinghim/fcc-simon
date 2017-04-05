@@ -2,7 +2,72 @@
 (function () { "use strict";
 var Simon = function() { };
 Simon.main = function() {
-	Simon.app = new Vue({ el : "#app", data : { message : "Hello World!"}});
+	var btnClr = "red";
+	var tmp = function() {
+		console.log(btnClr);
+		if(this.rounds[this.count] == btnClr) {
+			Simon.advance();
+		}
+	};
+	var btnClr1 = "blue";
+	var tmp1 = function() {
+		console.log(btnClr1);
+		if(this.rounds[this.count] == btnClr1) {
+			Simon.advance();
+		}
+	};
+	var btnClr2 = "green";
+	var tmp2 = function() {
+		console.log(btnClr2);
+		if(this.rounds[this.count] == btnClr2) {
+			Simon.advance();
+		}
+	};
+	var btnClr3 = "yellow";
+	var tmp3 = function() {
+		console.log(btnClr3);
+		if(this.rounds[this.count] == btnClr3) {
+			Simon.advance();
+		}
+	};
+	Simon.app = new Vue({ el : "#app", data : { menu : false, game : true, count : 0, rounds : []}, methods : { redBtn : tmp, blueBtn : tmp1, greenBtn : tmp2, yellowBtn : tmp3}});
+};
+Simon.btn = function(btnClr) {
+	return function() {
+		console.log(btnClr);
+		if(this.rounds[this.count] == btnClr) {
+			Simon.advance();
+		}
+	};
+};
+Simon.advance = function() {
+	if(Simon.app.count < Simon.app.rounds.length) {
+		Simon.app.count++;
+	} else {
+		Simon.app.count = 0;
+		Simon.getnext();
+	}
+};
+Simon.getnext = function() {
+	var tmp = Simon.app.rounds.push;
+	var tmp1;
+	switch(Math.floor(Math.random() * 4)) {
+	case 0:
+		tmp1 = "red";
+		break;
+	case 1:
+		tmp1 = "blue";
+		break;
+	case 2:
+		tmp1 = "green";
+		break;
+	case 3:
+		tmp1 = "yellow";
+		break;
+	default:
+		tmp1 = "yellow";
+	}
+	tmp(tmp1);
 };
 Simon.main();
 })();
