@@ -32,7 +32,7 @@ Simon.main = function() {
 			this.advance();
 		}
 	};
-	Simon.app = new Vue({ el : "#app", data : { menu : true, game : false, count : 0, rounds : []}, methods : { redBtn : tmp, blueBtn : tmp1, greenBtn : tmp2, yellowBtn : tmp3, advance : Simon.advance, getnext : Simon.getnext, start : Simon.start}});
+	Simon.app = new Vue({ el : "#app", data : { menu : true, game : false, count : 0, rounds : []}, methods : { redBtn : tmp, blueBtn : tmp1, greenBtn : tmp2, yellowBtn : tmp3, advance : Simon.advance, getnext : Simon.getnext, start : Simon.start, reset : Simon.reset}});
 };
 Simon.btn = function(btnClr) {
 	return function() {
@@ -48,6 +48,10 @@ Simon.start = function() {
 	this.count = 0;
 	this.rounds = [];
 	this.getnext();
+};
+Simon.reset = function() {
+	this.menu = true;
+	this.game = false;
 };
 Simon.advance = function() {
 	if(this.count < this.rounds.length - 1) {

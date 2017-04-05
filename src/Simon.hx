@@ -28,9 +28,11 @@ class Simon {
                 blueBtn: btn(SimonClr.blue),
                 greenBtn: btn(SimonClr.green),
                 yellowBtn: btn(SimonClr.yellow),
+
                 advance: advance,
                 getnext: getnext,
                 start: start,
+                reset: reset
             },
         });
     }
@@ -50,6 +52,11 @@ class Simon {
         Lib.nativeThis.count = 0;
         Lib.nativeThis.rounds = [];
         Lib.nativeThis.getnext();
+    }
+
+    inline static function reset() {
+        Lib.nativeThis.menu = true;
+        Lib.nativeThis.game = false;
     }
 
     inline static function advance() {
