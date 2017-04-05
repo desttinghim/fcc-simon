@@ -4,6 +4,27 @@ Math.__name__ = true;
 var Simon = function() { };
 Simon.__name__ = true;
 Simon.main = function() {
+	var _g = new haxe_ds_StringMap();
+	if(__map_reserved["red"] != null) {
+		_g.setReserved("red",false);
+	} else {
+		_g.h["red"] = false;
+	}
+	if(__map_reserved["blue"] != null) {
+		_g.setReserved("blue",false);
+	} else {
+		_g.h["blue"] = false;
+	}
+	if(__map_reserved["green"] != null) {
+		_g.setReserved("green",false);
+	} else {
+		_g.h["green"] = false;
+	}
+	if(__map_reserved["yellow"] != null) {
+		_g.setReserved("yellow",false);
+	} else {
+		_g.h["yellow"] = false;
+	}
 	var btnClr = "red";
 	var tmp = function() {
 		console.log(btnClr + " " + Std.string(this.count));
@@ -32,7 +53,7 @@ Simon.main = function() {
 			this.advance();
 		}
 	};
-	Simon.app = new Vue({ el : "#app", data : { menu : true, game : false, strict : false, count : 0, rounds : []}, methods : { redBtn : tmp, blueBtn : tmp1, greenBtn : tmp2, yellowBtn : tmp3, advance : Simon.advance, getnext : Simon.getnext, demonstrate : Simon.demonstrate, start : Simon.start, toggleStrict : function() {
+	Simon.app = new Vue({ el : "#app", data : { menu : true, game : false, strict : false, count : 0, rounds : [], demo : _g}, methods : { redBtn : tmp, blueBtn : tmp1, greenBtn : tmp2, yellowBtn : tmp3, advance : Simon.advance, getnext : Simon.getnext, demonstrate : Simon.demonstrate, start : Simon.start, toggleStrict : function() {
 		this.strict = this.strict ? false : true;
 	}, reset : Simon.reset}});
 };
@@ -90,24 +111,18 @@ Simon.demonstrate = function() {
 	var _g = this.rounds.length;
 	while(_g1 < _g) {
 		var i = _g1++;
-		console.log(i);
 		var clr = [this.rounds[i]];
-		var el = [window.document.getElementById(clr[0])];
-		if(el[0] == null) {
-			console.log("what");
-			continue;
-		}
-		haxe_Timer.delay((function(el1,clr1) {
+		this;
+		haxe_Timer.delay((function(clr1) {
 			return function() {
-				console.log(clr1[0]);
-				el1[0].setAttribute("style","box-shadow: 10px 10px 5px black inset;");
+				Simon.app.$data.demo.get(clr1[0],true);
 			};
-		})(el,clr),i * 1000);
-		haxe_Timer.delay((function(el2) {
+		})(clr),i * 1000);
+		haxe_Timer.delay((function(clr2) {
 			return function() {
-				el2[0].setAttribute("style","");
+				Simon.app.demo.get(clr2[0],false);
 			};
-		})(el),i * 1000 + 500);
+		})(clr),i * 1000 + 500);
 	}
 };
 var Std = function() { };
@@ -115,6 +130,8 @@ Std.__name__ = true;
 Std.string = function(s) {
 	return js_Boot.__string_rec(s,"");
 };
+var haxe_IMap = function() { };
+haxe_IMap.__name__ = true;
 var haxe_Timer = function(time_ms) {
 	var me = this;
 	this.id = setInterval(function() {
@@ -139,6 +156,19 @@ haxe_Timer.prototype = {
 		this.id = null;
 	}
 	,run: function() {
+	}
+};
+var haxe_ds_StringMap = function() {
+	this.h = { };
+};
+haxe_ds_StringMap.__name__ = true;
+haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
+haxe_ds_StringMap.prototype = {
+	setReserved: function(key,value) {
+		if(this.rh == null) {
+			this.rh = { };
+		}
+		this.rh["$" + key] = value;
 	}
 };
 var js_Boot = function() { };
@@ -229,5 +259,6 @@ js_Boot.__string_rec = function(o,s) {
 };
 String.__name__ = true;
 Array.__name__ = true;
+var __map_reserved = {}
 Simon.main();
 })();

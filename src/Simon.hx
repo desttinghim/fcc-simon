@@ -23,6 +23,12 @@ class Simon {
                 strict: false,
                 count: 0,
                 rounds: [],
+                demo: [
+                    SimonClr.red => false,
+                    SimonClr.blue => false,
+                    SimonClr.green => false,
+                    SimonClr.yellow => false,
+                ]
             },
             methods: {
                 redBtn: btn(SimonClr.red),
@@ -89,16 +95,13 @@ class Simon {
 
     inline static function demonstrate() {
         for (i in 0...Lib.nativeThis.rounds.length) {
-            trace(i);
             var clr = Lib.nativeThis.rounds[i];
-            var el = js.Browser.document.getElementById(clr);
-            if (el == null) {trace('what'); continue;}
+            var demo = Lib.nativeThis.demo;
             haxe.Timer.delay(function() {
-                trace(clr);
-                el.setAttribute("style", "box-shadow: 10px 10px 5px black inset;");
+                app.demo.get(clr, true);
             }, i * 1000);
             haxe.Timer.delay(function() {
-                el.setAttribute("style", "");
+                app.demo.get(clr, false);
             }, i * 1000 + 500);
         }
     }

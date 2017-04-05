@@ -71,13 +71,13 @@
                 <div id="count">{{rounds.length}}
                 </div><div id="simon">
                     <button class="simon btn" id="green"
-                        v-on:click="greenBtn">
+                        v-bind:class="{glow: demo.green}" v-on:click="greenBtn">
                     </button><button class="simon btn" id="red"
-                        v-on:click="redBtn">
+                        v-bind:class="{glow: demo.red}" v-on:click="redBtn">
                     </button><button class="simon btn" id="yellow"
-                        v-on:click="yellowBtn">
+                        v-bind:class="{glow: demo.yellow}" v-on:click="yellowBtn">
                     </button><button class="simon btn" id="blue"
-                        v-on:click="blueBtn">
+                        v-bind:class="{glow: demo.blue}" v-on:click="blueBtn">
                     </button>
                 </div><button class="btn" id="reset" v-on:click="reset">RESET
                 </button>
