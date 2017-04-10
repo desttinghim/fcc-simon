@@ -1,108 +1,88 @@
 package;
 
-import vue.Vue;
-import js.Lib;
+import js.Browser;
 
-@:enum abstract SimonClr(String) to String {
+class Simon {
+
+    public static function main() {
+        startmenu();
+    }
+
+    public static function startmenu() {
+        setHTML(Menu.html);
+    }
+
+    public static function startgame() {
+        setHTML(Game.html);
+    }
+
+    public static function setHTML(html) {
+        Browser.document.getElementById('app').innerHTML = html;
+    }
+}
+
+@:expose
+class Menu {
+
+    public static var html = Browser.document.getElementById('menu').innerHTML;
+
+    public static function start() {
+        Simon.setHTML(Game.html);
+    }
+
+    public static function strict() {
+
+    }
+
+}
+
+@:enum abstract Clr(String) to String {
     var red = 'red';
     var blue = 'blue';
     var green = 'green';
     var yellow = 'yellow';
 }
 
-class Simon {
-    public static var app : Vue;
+@:expose
+class Game {
+    static var rounds : Array<Clr>;
+    static var count : Int;
 
-    public static function main() {
+    public static var html = Browser.document.getElementById('game').innerHTML;
 
-        app = new Vue({
-            el: '#app',
-            data: {
-                menu: true,
-                game: false,
-                strict: false,
-                count: 0,
-                rounds: [],
-                demo: [
-                    SimonClr.red => false,
-                    SimonClr.blue => false,
-                    SimonClr.green => false,
-                    SimonClr.yellow => false,
-                ]
-            },
-            methods: {
-                redBtn: btn(SimonClr.red),
-                blueBtn: btn(SimonClr.blue),
-                greenBtn: btn(SimonClr.green),
-                yellowBtn: btn(SimonClr.yellow),
+    public static function btn(clr:Clr) {
+        return function(event:js.html.MouseEvent) {
 
-                advance: advance,
-                getnext: getnext,
-                demonstrate: demonstrate,
-                start: start,
-                toggleStrict: function() {
-                    var strict = Lib.nativeThis.strict;
-                    Lib.nativeThis.strict = (strict ? false : true);
-                },
-                reset: reset
-            },
-        });
-    }
-
-    inline static function btn(btnClr:SimonClr) {
-        return function() {
-            trace(btnClr + " " + Lib.nativeThis.count);
-            if (Lib.nativeThis.rounds[Lib.nativeThis.count] == btnClr) {
-                Lib.nativeThis.advance();
-            }
         }
     }
 
-    inline static function start() {
-        Lib.nativeThis.menu = false;
-        Lib.nativeThis.game = true;
-        Lib.nativeThis.count = 0;
-        Lib.nativeThis.rounds = [];
-        Lib.nativeThis.getnext();
-    }
-
-    inline static function reset() {
-        Lib.nativeThis.menu = true;
-        Lib.nativeThis.game = false;
-    }
-
-    inline static function advance() {
-        if (Lib.nativeThis.count < Lib.nativeThis.rounds.length-1) {
-            Lib.nativeThis.count++;
+    static function advance() {
+        if (count < rounds.length-1) {
+            count++;
         } else {
-            Lib.nativeThis.count = 0;
-            Lib.nativeThis.getnext();
+            count = 0;
+            getnext();
         }
     }
 
-    inline static function getnext() {
+    static function getnext() {
         var rand = Math.floor(Math.random() * 4);
-        Lib.nativeThis.rounds.push(switch(rand) {
-            case 0: SimonClr.red;
-            case 1: SimonClr.blue;
-            case 2: SimonClr.green;
-            case 3: SimonClr.yellow;
-            default: SimonClr.yellow;
+        rounds.push(switch(rand) {
+            case 0: Clr.red;
+            case 1: Clr.blue;
+            case 2: Clr.green;
+            case 3: Clr.yellow;
+            default: Clr.yellow;
         });
-        trace(Lib.nativeThis.rounds);
-        Lib.nativeThis.demonstrate();
+        trace(rounds);
+        demonstrate();
     }
 
-    inline static function demonstrate() {
-        for (i in 0...Lib.nativeThis.rounds.length) {
-            var clr = Lib.nativeThis.rounds[i];
-            var demo = Lib.nativeThis.demo;
-            haxe.Timer.delay(function() {
-                app.demo.get(clr, true);
-            }, i * 1000);
-            haxe.Timer.delay(function() {
-                app.demo.get(clr, false);
-            }, i * 1000 + 500);
-        }
+    static function flash(clr:Clr) {
+
+    }
+
+    static function demonstrate() {
+
     }
 }
