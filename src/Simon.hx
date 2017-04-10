@@ -9,10 +9,12 @@ class Simon {
     }
 
     public static function startmenu() {
+        Menu.init();
         setHTML(Menu.html);
     }
 
     public static function startgame() {
+        Game.init();
         setHTML(Game.html);
     }
 
@@ -26,8 +28,12 @@ class Menu {
 
     public static var html = Browser.document.getElementById('menu').innerHTML;
 
+    public static function init() {
+        trace('what');
+    }
+
     public static function start() {
-        Simon.setHTML(Game.html);
+        Simon.startgame();
     }
 
     public static function strict() {
@@ -47,12 +53,26 @@ class Menu {
 class Game {
     static var rounds : Array<Clr>;
     static var count : Int;
+    static var countEl : js.html.DOMElement;
 
     public static var html = Browser.document.getElementById('game').innerHTML;
 
-    public static function btn(clr:Clr) {
-        return function(event:js.html.MouseEvent) {
+    public static function init() {
+        trace('init');
+        rounds = [];
+        count = 0;
+        countEl = Browser.document.getElementById('count');
+    }
 
+    public static function reset() {
+        Simon.startmenu();
+    }
+
+    public static function btn(clr:Clr) {
+        trace(clr + " " + count);
+        countEl.innerHTML = Std.string(count);
+        if (rounds[count] == clr) {
+            advance();
         }
     }
 

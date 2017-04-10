@@ -59,24 +59,24 @@
 
         <div id="app"></div>
 
-        <script id="menu">
+        <script type="text/html" id="menu">
             <h1 id="title">SIMON</h1>
-            <button class="btn" id="start" onclick="Menu.start">START</button>
-            <button class="btn" id="strict" onclick="Menu.strict">
+            <button class="btn" id="start" onclick="Menu.start()">START</button>
+            <button class="btn" id="strict" onclick="Menu.strict()">
                 MODE:
                 <span id="mode">STRICT</span>
             </button>
         </script>
 
-        <script id="game">
+        <script type="text/html" id="game">
             <div id="count">
             </div><div id="simon">
-                <button class="simon btn" id="green" onclick="Game.btn">
-                </button><button class="simon btn" id="red" onclick="Game.btn">
-                </button><button class="simon btn" id="yellow" onclick="Game.btn">
-                </button><button class="simon btn" id="blue" onclick="Game.btn">
+                <button class="simon btn" id="green" onclick="Game.btn('green')">
+                </button><button class="simon btn" id="red" onclick="Game.btn('red')">
+                </button><button class="simon btn" id="yellow" onclick="Game.btn('yellow')">
+                </button><button class="simon btn" id="blue" onclick="Game.btn('blue')">
                 </button>
-            </div><button class="btn" id="reset" v-on:click="reset">RESET
+            </div><button class="btn" id="reset" onclick="Game.reset()">RESET
             </button>
         </script>
 
