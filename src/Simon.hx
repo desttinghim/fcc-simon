@@ -9,13 +9,13 @@ class Simon {
     }
 
     public static function startmenu() {
-        Menu.init();
         setHTML(Menu.html);
+        Menu.init();
     }
 
     public static function startgame() {
-        Game.init();
         setHTML(Game.html);
+        Game.init();
     }
 
     public static function setHTML(html) {
@@ -29,7 +29,7 @@ class Menu {
     public static var html = Browser.document.getElementById('menu').innerHTML;
 
     public static function init() {
-        trace('what');
+
     }
 
     public static function start() {
@@ -58,10 +58,10 @@ class Game {
     public static var html = Browser.document.getElementById('game').innerHTML;
 
     public static function init() {
-        trace('init');
         rounds = [];
         count = 0;
         countEl = Browser.document.getElementById('count');
+        getnext();
     }
 
     public static function reset() {

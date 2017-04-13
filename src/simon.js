@@ -7,12 +7,11 @@ Simon.main = function() {
 	Simon.startmenu();
 };
 Simon.startmenu = function() {
-	Menu.init();
 	Simon.setHTML(Menu.html);
 };
 Simon.startgame = function() {
-	Game.init();
 	Simon.setHTML(Game.html);
+	Game.init();
 };
 Simon.setHTML = function(html) {
 	window.document.getElementById("app").innerHTML = html;
@@ -20,7 +19,6 @@ Simon.setHTML = function(html) {
 var Menu = $hx_exports["Menu"] = function() { };
 Menu.__name__ = true;
 Menu.init = function() {
-	console.log("what");
 };
 Menu.start = function() {
 	Simon.startgame();
@@ -30,10 +28,10 @@ Menu.strict = function() {
 var Game = $hx_exports["Game"] = function() { };
 Game.__name__ = true;
 Game.init = function() {
-	console.log("init");
 	Game.rounds = [];
 	Game.count = 0;
 	Game.countEl = window.document.getElementById("count");
+	Game.getnext();
 };
 Game.reset = function() {
 	Simon.startmenu();
