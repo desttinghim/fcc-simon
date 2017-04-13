@@ -31,6 +31,36 @@ Game.init = function() {
 	Game.rounds = [];
 	Game.count = 0;
 	Game.countEl = window.document.getElementById("count");
+	var _g = new haxe_ds_StringMap();
+	var value = window.document.getElementById("red");
+	var key = "red";
+	if(__map_reserved[key] != null) {
+		_g.setReserved(key,value);
+	} else {
+		_g.h[key] = value;
+	}
+	var value1 = window.document.getElementById("blue");
+	var key1 = "blue";
+	if(__map_reserved[key1] != null) {
+		_g.setReserved(key1,value1);
+	} else {
+		_g.h[key1] = value1;
+	}
+	var value2 = window.document.getElementById("green");
+	var key2 = "green";
+	if(__map_reserved[key2] != null) {
+		_g.setReserved(key2,value2);
+	} else {
+		_g.h[key2] = value2;
+	}
+	var value3 = window.document.getElementById("yellow");
+	var key3 = "yellow";
+	if(__map_reserved[key3] != null) {
+		_g.setReserved(key3,value3);
+	} else {
+		_g.h[key3] = value3;
+	}
+	Game.btnEl = _g;
 	Game.getnext();
 };
 Game.reset = function() {
@@ -71,15 +101,81 @@ Game.getnext = function() {
 	}
 	Game.rounds.push(tmp);
 	console.log(Game.rounds);
+	Game.demonstrate();
 };
 Game.flash = function(clr) {
+	console.log(clr);
+	var _this = Game.btnEl;
+	(__map_reserved[clr] != null ? _this.getReserved(clr) : _this.h[clr]).setAttribute("class","simon btn glow");
+	haxe_Timer.delay(function() {
+		var _this1 = Game.btnEl;
+		(__map_reserved[clr] != null ? _this1.getReserved(clr) : _this1.h[clr]).setAttribute("class","simon btn");
+	},500);
 };
 Game.demonstrate = function() {
+	var _g1 = 0;
+	var _g = Game.rounds.length;
+	while(_g1 < _g) {
+		var c = [_g1++];
+		haxe_Timer.delay((function(c1) {
+			return function() {
+				Game.flash(Game.rounds[c1[0]]);
+			};
+		})(c),c[0] * 1000);
+	}
 };
 var Std = function() { };
 Std.__name__ = true;
 Std.string = function(s) {
 	return js_Boot.__string_rec(s,"");
+};
+var haxe_IMap = function() { };
+haxe_IMap.__name__ = true;
+var haxe_Timer = function(time_ms) {
+	var me = this;
+	this.id = setInterval(function() {
+		me.run();
+	},time_ms);
+};
+haxe_Timer.__name__ = true;
+haxe_Timer.delay = function(f,time_ms) {
+	var t = new haxe_Timer(time_ms);
+	t.run = function() {
+		t.stop();
+		f();
+	};
+	return t;
+};
+haxe_Timer.prototype = {
+	stop: function() {
+		if(this.id == null) {
+			return;
+		}
+		clearInterval(this.id);
+		this.id = null;
+	}
+	,run: function() {
+	}
+};
+var haxe_ds_StringMap = function() {
+	this.h = { };
+};
+haxe_ds_StringMap.__name__ = true;
+haxe_ds_StringMap.__interfaces__ = [haxe_IMap];
+haxe_ds_StringMap.prototype = {
+	setReserved: function(key,value) {
+		if(this.rh == null) {
+			this.rh = { };
+		}
+		this.rh["$" + key] = value;
+	}
+	,getReserved: function(key) {
+		if(this.rh == null) {
+			return null;
+		} else {
+			return this.rh["$" + key];
+		}
+	}
 };
 var js_Boot = function() { };
 js_Boot.__name__ = true;
@@ -169,6 +265,7 @@ js_Boot.__string_rec = function(o,s) {
 };
 String.__name__ = true;
 Array.__name__ = true;
+var __map_reserved = {}
 Menu.html = window.document.getElementById("menu").innerHTML;
 Game.html = window.document.getElementById("game").innerHTML;
 Simon.main();

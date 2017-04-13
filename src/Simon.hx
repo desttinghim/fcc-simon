@@ -54,6 +54,7 @@ class Game {
     static var rounds : Array<Clr>;
     static var count : Int;
     static var countEl : js.html.DOMElement;
+    static var btnEl : Map<Clr, js.html.DOMElement>;
 
     public static var html = Browser.document.getElementById('game').innerHTML;
 
@@ -61,6 +62,12 @@ class Game {
         rounds = [];
         count = 0;
         countEl = Browser.document.getElementById('count');
+        btnEl = [
+            red => Browser.document.getElementById('red'),
+            blue => Browser.document.getElementById('blue'),
+            green => Browser.document.getElementById('green'),
+            yellow => Browser.document.getElementById('yellow'),
+        ];
         getnext();
     }
 
@@ -99,10 +106,14 @@ class Game {
     }
 
     static function flash(clr:Clr) {
-
+        trace(clr);
+        btnEl.get(clr).setAttribute('class', 'simon btn glow');
+        haxe.Timer.delay(function() btnEl.get(clr).setAttribute('class', 'simon btn'), 500);
     }
 
     static function demonstrate() {
-
+        for (c in 0...rounds.length) {
+            haxe.Timer.delay(function() flash(rounds[c]), c * 1000);
+        }
     }
 }
