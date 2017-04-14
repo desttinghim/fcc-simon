@@ -67,8 +67,9 @@ Game.reset = function() {
 	Simon.startmenu();
 };
 Game.btn = function(clr) {
-	console.log(clr + " " + Game.count);
+	Game.flash(clr);
 	Game.countEl.innerHTML = Std.string(Game.count);
+	console.log(Game.rounds[Game.count] == clr);
 	if(Game.rounds[Game.count] == clr) {
 		Game.advance();
 	}
@@ -78,7 +79,7 @@ Game.advance = function() {
 		Game.count++;
 	} else {
 		Game.count = 0;
-		Game.getnext();
+		haxe_Timer.delay(Game.getnext,1000);
 	}
 };
 Game.getnext = function() {
@@ -104,12 +105,15 @@ Game.getnext = function() {
 	Game.demonstrate();
 };
 Game.flash = function(clr) {
-	console.log(clr);
 	var _this = Game.btnEl;
-	(__map_reserved[clr] != null ? _this.getReserved(clr) : _this.h[clr]).setAttribute("class","simon btn glow");
+	(__map_reserved[clr] != null ? _this.getReserved(clr) : _this.h[clr]).setAttribute("class","simon btn");
 	haxe_Timer.delay(function() {
 		var _this1 = Game.btnEl;
-		(__map_reserved[clr] != null ? _this1.getReserved(clr) : _this1.h[clr]).setAttribute("class","simon btn");
+		(__map_reserved[clr] != null ? _this1.getReserved(clr) : _this1.h[clr]).setAttribute("class","simon btn glow");
+	},100);
+	haxe_Timer.delay(function() {
+		var _this2 = Game.btnEl;
+		(__map_reserved[clr] != null ? _this2.getReserved(clr) : _this2.h[clr]).setAttribute("class","simon btn");
 	},500);
 };
 Game.demonstrate = function() {

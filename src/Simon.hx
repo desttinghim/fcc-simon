@@ -76,8 +76,9 @@ class Game {
     }
 
     public static function btn(clr:Clr) {
-        trace(clr + " " + count);
+        flash(clr);
         countEl.innerHTML = Std.string(count);
+        trace(rounds[count] == clr);
         if (rounds[count] == clr) {
             advance();
         }
@@ -88,7 +89,7 @@ class Game {
             count++;
         } else {
             count = 0;
-            getnext();
+            haxe.Timer.delay(getnext, 1000);
         }
     }
 
@@ -106,8 +107,8 @@ class Game {
     }
 
     static function flash(clr:Clr) {
-        trace(clr);
-        btnEl.get(clr).setAttribute('class', 'simon btn glow');
+        btnEl.get(clr).setAttribute('class', 'simon btn');
+        haxe.Timer.delay(function() btnEl.get(clr).setAttribute('class', 'simon btn glow'), 100);
         haxe.Timer.delay(function() btnEl.get(clr).setAttribute('class', 'simon btn'), 500);
     }
 
