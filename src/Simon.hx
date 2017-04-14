@@ -77,7 +77,6 @@ class Game {
 
     public static function btn(clr:Clr) {
         flash(clr);
-        countEl.innerHTML = Std.string(count);
         trace(rounds[count] == clr);
         if (rounds[count] == clr) {
             advance();
@@ -103,6 +102,7 @@ class Game {
             default: Clr.yellow;
         });
         trace(rounds);
+        countEl.innerHTML = Std.string(rounds.length);
         demonstrate();
     }
 

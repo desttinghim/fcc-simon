@@ -68,7 +68,6 @@ Game.reset = function() {
 };
 Game.btn = function(clr) {
 	Game.flash(clr);
-	Game.countEl.innerHTML = Std.string(Game.count);
 	console.log(Game.rounds[Game.count] == clr);
 	if(Game.rounds[Game.count] == clr) {
 		Game.advance();
@@ -102,6 +101,7 @@ Game.getnext = function() {
 	}
 	Game.rounds.push(tmp);
 	console.log(Game.rounds);
+	Game.countEl.innerHTML = Std.string(Game.rounds.length);
 	Game.demonstrate();
 };
 Game.flash = function(clr) {
