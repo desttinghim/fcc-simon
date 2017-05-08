@@ -1,6 +1,7 @@
 package;
 
 import js.Browser;
+import js.html.Audio;
 
 class Simon {
 
@@ -55,6 +56,7 @@ class Game {
     static var count : Int;
     static var countEl : js.html.DOMElement;
     static var btnEl : Map<Clr, js.html.DOMElement>;
+    static var btnSnd : Map<Clr, js.html.Audio>;
 
     public static var html = Browser.document.getElementById('game').innerHTML;
 
@@ -67,6 +69,12 @@ class Game {
             blue => Browser.document.getElementById('blue'),
             green => Browser.document.getElementById('green'),
             yellow => Browser.document.getElementById('yellow'),
+        ];
+        btnSnd = [
+       		red => new Audio('assets/simonSound1.mp3'),
+       		blue => new Audio('assets/simonSound2.mp3'),
+       		green => new Audio('assets/simonSound3.mp3'),
+       		yellow => new Audio('assets/simonSound4.mp3'),
         ];
         getnext();
     }
@@ -108,7 +116,10 @@ class Game {
 
     static function flash(clr:Clr) {
         btnEl.get(clr).setAttribute('class', 'simon btn');
-        haxe.Timer.delay(function() btnEl.get(clr).setAttribute('class', 'simon btn glow'), 100);
+        haxe.Timer.delay(function() {
+        	btnEl.get(clr).setAttribute('class', 'simon btn glow');
+        	btnSnd.get(clr).play();
+        }, 100);
         haxe.Timer.delay(function() btnEl.get(clr).setAttribute('class', 'simon btn'), 500);
     }
 
